@@ -19,8 +19,8 @@ def message_formater(entry):
     sumarry = re.sub("<a..*>", "[blue]", sumarry)
     sumarry = re.sub("</h..*>", "[/bold]", sumarry)
     sumarry = re.sub("<h..*>", "[bold]", sumarry)
-    sumarry = re.sub("<pre><code>", "", sumarry)
-    sumarry = re.sub("</code></pre>", "", sumarry)
+    sumarry = re.sub("<pre><code>", "[green]", sumarry)
+    sumarry = re.sub("</code></pre>", "[/green]", sumarry)
     message = f"""
 last updated at [red]{time}[/red]
 [bold]{title}[/bold]
