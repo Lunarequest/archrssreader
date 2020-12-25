@@ -1,5 +1,6 @@
 from reader import make_reader
-from rich import print
+
+# from rich import print
 import argparse
 import os
 import re
@@ -12,6 +13,7 @@ def init(rss_reader):
 def message_formater(entry):
     title = entry.title
     time = str(entry.last_updated).split(".")[0]
+    time = f"[orange]{time}[/orange]"
     sumarry = entry.summary
     sumarry = re.sub("</p>", "\n", sumarry)
     sumarry = re.sub("<p>", "", sumarry)
@@ -19,10 +21,10 @@ def message_formater(entry):
     sumarry = re.sub("<a..*>", "[blue]", sumarry)
     sumarry = re.sub("</h..*>", "[/bold]", sumarry)
     sumarry = re.sub("<h..*>", "[bold]", sumarry)
-    sumarry = re.sub("<pre><code>", "[green]", sumarry)
-    sumarry = re.sub("</code></pre>", "[/green]", sumarry)
+    sumarry = re.sub("<pre><code>", "[red]", sumarry)
+    sumarry = re.sub("</code></pre>", "[/red]", sumarry)
     message = f"""
-last updated at [red]{time}[/red]
+last updated at {time}
 [bold]{title}[/bold]
 {sumarry}
     """
@@ -35,6 +37,7 @@ def get_latest(rss_reader):
     for i in range(1, num_entries):
         rss_reader.mark_as_read(enteries[i])
     entry = enteries[0]
+    print(entry)
     message = message_formater(entry)
     print(message)
 
@@ -46,7 +49,7 @@ def get_all(rss_reader):
     for entry in enteries:
         rss_reader.mark_as_read(entry)
         message = message_formater(entry)
-        print(f"{count}/{num_entries}")
+        print(f"[bold]{count}/{num_entries}[/bold]")
         print(message)
         count += 1
 
